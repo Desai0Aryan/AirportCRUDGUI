@@ -1,3 +1,14 @@
+AirportCRUDGUI is a Java GUI application developed in NetBeans that manages airport passenger check-in data. The system supports full CRUD (Create, Read, Update, Delete) operations for passengers and check-in locations.
+Users can:
+
+Add, view, update, and delete passenger records (ID, name, check-in location, time).
+
+Track which passengers checked in, where, and when.
+
+Maintain a log of check-in locations and associated passenger IDs.
+
+The intuitive graphical interface makes it easy to manage and view airport check-in data efficiently.
+
 Instructions
 Download the ZIP file from this repository.
 
