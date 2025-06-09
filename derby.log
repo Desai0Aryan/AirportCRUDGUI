@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Mon Jun 09 17:33:19 EDT 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0197-569c-b37a-000007367b68 
+on database directory /Users/aryan/Desktop/AirportCRUD~/Airport/airportdb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@18ff02e4 
+Loaded from file:/Users/aryan/Desktop/AirportCRUD~/Airport/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=23+37-2369
+user.dir=/Users/aryan/Desktop/AirportCRUD~/Airport
+os.name=Mac OS X
+os.arch=aarch64
+os.version=15.5
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

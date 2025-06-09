@@ -1,0 +1,183 @@
+import entity.CheckinLocation;
+import entity.CheckinLocationDAO;
+import entity.Passenger;
+import entity.PassengerDAO;
+import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.Scanner; 
+
+public class main {
+    public static void main(String[] args) {
+     //part 2: 
+//        CheckinLocationDAO checkinLocationDAO = new CheckinLocationDAO();
+//        PassengerDAO passengerDAO = new PassengerDAO();
+//
+//        // 1. Add three Check-in Locations from the simulation
+//        checkinLocationDAO.insert(new CheckinLocation(1, "Kiosk 1"));
+//        checkinLocationDAO.insert(new CheckinLocation(2, "Kiosk 2"));
+//        checkinLocationDAO.insert(new CheckinLocation(3, "Kiosk 3"));
+//
+//        // 2. Add one Passenger for each check-in location
+//        passengerDAO.insert(new Passenger(123, "Katie", "Johnson", 1, LocalDateTime.of(2024, 10, 24, 7, 1)));
+//        passengerDAO.insert(new Passenger(122, "George", "Butler", 2, LocalDateTime.of(2024, 10, 24, 7, 1)));
+//        passengerDAO.insert(new Passenger(140, "Sarah", "Beck", 3, LocalDateTime.of(2024, 10, 24, 7, 2)));
+//
+//        // 3. Pick one check-in location and update their station name
+//        CheckinLocation locationToUpdate = new CheckinLocation(1, "Updated Kiosk 1");
+//        checkinLocationDAO.update(locationToUpdate);
+//
+//        // 4. Pick one passenger and change its check-in datetime
+//        Passenger passengerToUpdate = new Passenger(123, "Katie", "Johnson", 1, LocalDateTime.of(2024, 10, 24, 8, 0));
+//        passengerDAO.update(passengerToUpdate);
+//
+//        // 5. Attempt to update a passenger's check-in location ID to a non-existing check-in location
+//        Passenger passengerWithInvalidLocation = new Passenger(122, "George", "Butler", 999, LocalDateTime.of(2024, 10, 24, 7, 1));
+//        try {
+//            passengerDAO.update(passengerWithInvalidLocation);
+//        } catch (Exception e) { // Catch general exceptions if SQLException is not thrown
+//            System.err.println("Error: " + e.getMessage());
+//        }
+//
+//        // Optionally, print all locations and passengers to verify the changes
+//        System.out.println("Check-in Locations:");
+//        checkinLocationDAO.getAll().forEach(System.out::println);
+//
+//        System.out.println("Passengers:");
+//        passengerDAO.getAll().forEach(System.out::println);
+
+// part 3:
+CheckinLocationDAO checkinLocationDAO = new CheckinLocationDAO();
+PassengerDAO passengerDAO = new PassengerDAO();
+Scanner scanner = new Scanner(System.in);
+
+boolean running = true;
+
+while (running) {
+    System.out.println("Choose an option:");
+    System.out.println("1. Create a Check-in Location");
+    System.out.println("2. Update a Check-in Location");
+    System.out.println("3. Delete a Check-in Location");
+    System.out.println("4. Add a Passenger");
+    System.out.println("5. Update a Passenger");
+    System.out.println("6. Delete a Passenger");
+    System.out.println("7. View All Check-in Locations");
+    System.out.println("8. View All Passengers");
+    System.out.println("9. Exit Application");
+
+    int option = scanner.nextInt();
+    scanner.nextLine(); // Consume newline
+
+    switch (option) {
+        case 1: // Create a Check-in Location
+            System.out.print("Enter location ID: ");
+            int locationId = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.print("Enter station name: ");
+            String stationName = scanner.nextLine();
+            checkinLocationDAO.insert(new CheckinLocation(locationId, stationName));
+            System.out.println("New check-in location created: " + stationName);
+            break;
+
+        case 2: // Update a Check-in Location
+            System.out.print("Enter location ID to update: ");
+            int updateId = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.print("Enter new station name: ");
+            String newStationName = scanner.nextLine();
+            checkinLocationDAO.update(new CheckinLocation(updateId, newStationName));
+            System.out.println("Updated check-in location: " + newStationName);
+            break;
+
+        case 3: // Delete a Check-in Location
+            System.out.print("Enter location ID to delete: ");
+            int deleteId = scanner.nextInt();
+            checkinLocationDAO.delete(new CheckinLocation(deleteId, ""));
+            System.out.println("Deleted check-in location with ID: " + deleteId);
+            break;
+
+        case 4: // Add a Passenger
+            System.out.print("Enter passenger ID: ");
+            int passengerId = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.print("Enter first name: ");
+            String firstName = scanner.nextLine();
+            System.out.print("Enter last name: ");
+            String lastName = scanner.nextLine();
+            System.out.print("Enter check-in location ID: ");
+            int checkinLocationId = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            System.out.print("Enter check-in date and time (YYYY-MM-DD HH:MM): ");
+            String dateTimeInput = scanner.nextLine();
+
+            LocalDateTime checkinDateTime;
+            try {
+                checkinDateTime = LocalDateTime.parse(dateTimeInput.replace(" ", "T")); // Adjust format
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date/time format. Please use 'YYYY-MM-DD HH:MM'.");
+                break; // Return to main menu
+            }
+            passengerDAO.insert(new Passenger(passengerId, firstName, lastName, checkinLocationId, checkinDateTime));
+            System.out.println("New passenger created: " + firstName + " " + lastName);
+            break;
+
+ 
+        case 5: // Update a Passenger
+            System.out.print("Enter passenger ID to update: ");
+            int updatePassengerId = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.print("Enter new first name: ");
+            String newFirstName = scanner.nextLine();
+            System.out.print("Enter new last name: ");
+            String newLastName = scanner.nextLine();
+            System.out.print("Enter new check-in location ID: ");
+            int newCheckinLocationId = scanner.nextInt();
+            scanner.nextLine(); 
+            System.out.print("Enter new check-in date and time (YYYY-MM-DD HH:MM): ");
+            String newDateTimeInput = scanner.nextLine();
+
+            LocalDateTime newCheckinDateTime;
+            try {
+                newCheckinDateTime = LocalDateTime.parse(newDateTimeInput.replace(" ", "T"));
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date/time format. Please use 'YYYY-MM-DD HH:MM'.");
+                break;
+            }
+            passengerDAO.update(new Passenger(updatePassengerId, newFirstName, newLastName, newCheckinLocationId, newCheckinDateTime));
+            System.out.println("Updated passenger: " + newFirstName + " " + newLastName);
+            break;
+
+
+        case 6: // Delete a Passenger
+            System.out.print("Enter passenger ID to delete: ");
+            int deletePassengerId = scanner.nextInt();
+            passengerDAO.delete(new Passenger(deletePassengerId, "", "", 0, null));
+            System.out.println("Deleted passenger with ID: " + deletePassengerId);
+            break;
+
+        case 7: // View All Check-in Locations
+            List<CheckinLocation> allLocations = checkinLocationDAO.getAll();
+            System.out.println("Check-in Locations:");
+            allLocations.forEach(System.out::println);
+            break;
+
+        case 8: // View All Passengers
+            List<Passenger> allPassengers = passengerDAO.getAll();
+            System.out.println("All Passengers:");
+            allPassengers.forEach(System.out::println);
+            break;
+
+        case 9: // Exit Application
+            System.out.println("Exiting application. Goodbye!");
+            running = false;
+            break;
+
+        default:
+            System.out.println("Invalid option. Please try again.");
+    }
+}
+scanner.close();
+
+}
+}
